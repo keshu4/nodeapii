@@ -10,26 +10,37 @@ app.use(cors());
 app.get("/",(req,res) => {
     res.send("Hello");
 })
-app.post("/",(req,res) => {
-    var a = {};
-    var body = req.body;
-    var name = "Gourav";
-    var prime = [];
-    var cnt = 0;
-    for(i = 0;i<body.numbers.length;i++){
-        var f = true;
-        for(j = 2;j<body.numbers[i];j++){
-            if(body.numbers[i] % j == 0)
-            {
-                f = false;
-                break;
-            }
+
+function isLetter(c) {
+    return c.toLowerCase() != c.toUpperCase();
+}
+
+app.post("/bfhl",(req,res) => {
+    var a = req.body.data;
+    numbers = []
+    alphabets = []
+    c1 = 0;
+    c2 = 0;
+    for(let i = 0; i < a.length; i++){
+        if(isLetter(a[i])){
+            alphabets[c2] = a[i];
+            c2++;
         }
-        if(f === true){
-            prime[cnt++] = body.numbers[i];
+        if(!isNaN(a[i])){
+            numbers[c1] = a[i];
+            c1++;
         }
     }
-    a = {name:name,prime:prime};
-    res.json(a);
+    const re = {
+        "is_success": true,
+        "user_id": "krishnadeep_badbadwal_04032001",
+        "email": "krishnadeepbadbadwalcs19@acropolis.in",
+        "roll_number": "0827CS191131",
+        "numbers": numbers,
+        "alphabets": alphabets
+    }
+    res.json(re);
 })
-app.listen(port);
+app.listen(port, (req, res) => {
+    console.log("listening at port 5000");
+});
